@@ -1,6 +1,7 @@
 # cuando-viajo
 
 
-phantomjs ricchieri.js BA-Chascomus # Output: horarios-ricchieri.png
-phantomjs vtc.js Chascomus-BA # Output: horarios-vtc.png
-
+```
+phantomjs ricchieri.js BA-Chascomus # Output: ricchieri-BA-Chascomus.png
+phantomjs vtc.js Chascomus-BA # Output: vtc-Chascomus-BA.png
+```
