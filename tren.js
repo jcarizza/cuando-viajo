@@ -2,7 +2,7 @@ var BUENOSAIRES_CHASCOMUS = 'BA-Chascomus',
     CHASCOMUS_BUENOSAIRES = 'Chascomus-BA';
 
 var page = require('webpage').create(),
-    vtc = 'http://www.vtcviajesyturismo.com/',
+    url = 'http://www.sateliteferroviario.com.ar/horarios/amba_diferenciales.htm',
     system = require('system'),
     data = false,
     selector = false;
@@ -16,7 +16,7 @@ var page = require('webpage').create(),
 
 
     page.viewportSize = { width: 1440, height: 900 };
-    page.open(vtc, 'get', data, function (status) {
+    page.open(url, 'get', data, function (status) {
         if (status !== 'success') {
             console.log('Unable to post!');
         } else {
@@ -24,12 +24,12 @@ var page = require('webpage').create(),
             switch (system.args[1]){
               case BUENOSAIRES_CHASCOMUS:
                 var clipRect = page.evaluate(function (selector){
-                      return document.querySelector('div:nth-child(5) > table > tbody > tr > td:nth-child(3) > table').getBoundingClientRect();
+                      return document.querySelector('body > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > p:nth-child(31) > table:nth-child(2)').getBoundingClientRect();
                 });
                 break;
               case CHASCOMUS_BUENOSAIRES:
                 var clipRect = page.evaluate(function (selector){
-                      return document.querySelector('div:nth-child(5) > table > tbody > tr > td:nth-child(1) > table').getBoundingClientRect();
+                      return document.querySelector('body > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > p:nth-child(32) > table:nth-child(2)').getBoundingClientRect();
                 });
                 break;
               default:
@@ -42,7 +42,7 @@ var page = require('webpage').create(),
               width: clipRect.width,
               height: clipRect.height
             };
-            page.render('vtc-' + system.args[1] + '.png');
+            page.render('tren-' + system.args[1] + '.png');
             phantom.exit();
         }
         phantom.exit();

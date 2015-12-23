@@ -24,8 +24,6 @@ var page = require('webpage').create(),
         console.log("\n\nEscribe el origen y destino del viaje: \n-> BA-Chascomus \n-> Chascomus-BA\n");
         phantom.exit();
     }
-    
-
 
     page.viewportSize = { width: 1440, height: 900 };
     page.open(ricchiery, 'post', data, function (status) {
@@ -42,7 +40,6 @@ var page = require('webpage').create(),
               height: clipRect.height
             };
             page.render('ricchieri-' + system.args[1] + '.png');
-            console.log('Para ver los horarios abre horarios-ricchieri.png');
             phantom.exit();
         }
         phantom.exit();
