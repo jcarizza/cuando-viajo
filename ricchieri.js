@@ -4,35 +4,48 @@ var BUENOSAIRES_CHASCOMUS = 'BA-Chascomus',
 var page = require('webpage').create(),
     ricchiery = 'http://ricchieritours.com.ar/schedule.php',
     system = require('system'),
-    data = false;
+    tripId = false;
 
     page.onError = function(msg, trace) {
-      //console.log(msg);
-      //console.log(trace);
+      console.log(msg);
+      console.log(trace);
     };
 
-
-    if (system.args[1] === BUENOSAIRES_CHASCOMUS){
-        var data = "trips=2";
-    }
-
-    if (system.args[1] === CHASCOMUS_BUENOSAIRES){
-        var data = "trips=1";
-    }
-
-    if (system.args[1] === "-h" || data === false) {
-        console.log("\n\nEscribe el origen y destino del viaje: \n-> BA-Chascomus \n-> Chascomus-BA\n");
+    switch (system.args[1]) {
+      case BUENOSAIRES_CHASCOMUS:
+        tripId = "2";
+        break;
+      case CHASCOMUS_BUENOSAIRES:
+        tripId = "1";
+        break
+      default:
         phantom.exit();
+        break;
     }
 
     page.viewportSize = { width: 1440, height: 900 };
-    page.open(ricchiery, 'post', data, function (status) {
+    page.open(ricchiery, 'get', function (status) {
+
         if (status !== 'success') {
             console.log('Caramba! No se puede hacer post =(');
         } else {
+            page.evaluate(function(tripId) {
+							$.ajax({
+									type: "POST",
+									url: "scheduleService.php",
+									data: {tripid: tripId},
+									dataType: "html",
+									async: false,
+									success: function (data) {
+											$("#tbody_table_schedule").html(data);
+									}
+							});
+            }, tripId);
+
             var clipRect = page.evaluate(function(){
-              return document.querySelector('#schedule').getBoundingClientRect();
+              return document.querySelector('#table_schedule').getBoundingClientRect();
             });
+
             page.clipRect = {
               top: clipRect.top,
               left: clipRect.left,
