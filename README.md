@@ -1,3 +1,6 @@
+:warning: Este repositor está deprecado. Las agencias cambiaron su sitio y deje de mantener este paquete.
+
+
 # cuando-viajo
 
 
